@@ -1,38 +1,42 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require("path");
+const path = require('path');
 
 module.exports = {
-  mode: "development",
+
+  mode: 'production',
 
   performance: {
     maxAssetSize: 500000,
     maxEntrypointSize: 500000,
-    assetFilter: function (assetFilename) {
-      return !assetFilename.endsWith('.jpg')
+    assetFilter(assetFilename) {
+      return !assetFilename.endsWith('.jpg');
     },
   },
   entry: {
-    bundle: path.resolve(__dirname, 'src/scripts/index.js')
+    bundle: path.resolve(__dirname, 'src/scripts/index.js'),
   },
 
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: '[name].[contenhash].js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].js',
     clean: true,
-    assetModuleFilename: '[name][ext]'
+    assetModuleFilename: '[name][ext]',
   },
 
   devtool: 'source-map',
 
   plugins: [new HtmlWebpackPlugin({
-    title: 'Template Website',
+    title: 'Formality',
     template: './src/index.html',
     filename: 'index.html',
 
   })],
   devServer: {
     static: {
-      directory: path.dirname(__dirname, 'dist')
+      directory: path.dirname(__dirname, 'dist'),
+      watch: {
+        ignored: /node_modules/,
+      },
     },
     port: 3000,
     open: true,
@@ -45,11 +49,11 @@ module.exports = {
     rules: [
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
